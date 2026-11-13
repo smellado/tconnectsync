@@ -2,8 +2,6 @@
 name: tconnectsync
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -23,7 +21,7 @@ jobs:
       - name: Install tconnectsync
         run: python -m pip install --upgrade tconnectsync
 
-      - name: Synchronize Tandem with Nightscout
+      - name: Check Tandem login
         env:
           TCONNECT_EMAIL: ${{ secrets.TCONNECT_EMAIL }}
           TCONNECT_PASSWORD: ${{ secrets.TCONNECT_PASSWORD }}
@@ -31,4 +29,4 @@ jobs:
           NS_URL: ${{ secrets.NS_URL }}
           NS_SECRET: ${{ secrets.NS_SECRET }}
           TIMEZONE_NAME: Europe/Madrid
-        run: tconnectsync
+        run: tconnectsync --check-login
